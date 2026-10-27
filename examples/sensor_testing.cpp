@@ -101,7 +101,7 @@ uint32_t calibrationSamples = 0;
 bool footContact[4] = {};
 
 enum class State { BOOT, WAIT_CALIBRATION, CALIBRATING, MONITORING, FAULT };
-enum class Mode { HIGH, MEDIUM, ECO, INVALID };
+enum class Mode { MODE_HIGH, MODE_MEDIUM, MODE_ECO, INVALID };
 State state = State::BOOT;
 Mode mode = Mode::INVALID;
 uint32_t nextTick = 0;
@@ -123,7 +123,7 @@ bool initIMUs() {
   for (uint8_t i = 0; i < IMU_COUNT; ++i) {
     if (!selectMux(imuChannels[i])) return false;
     if (!imu.begin(0x68, &Wire)) return false;
-    imu.setFilterBandwidth(MPU6050_BANDWIDTH_21_HZ);
+    imu.setFilterBandwidth(MPU6050_BAND_21_HZ);
   }
   return true;
 }
@@ -169,7 +169,7 @@ Mode readMode() {
   const bool e = digitalRead(PIN_MODE_ECO) == LOW;
   if (static_cast<int>(h) + static_cast<int>(m) + static_cast<int>(e) != 1)
     return Mode::INVALID;
-  return h ? Mode::HIGH : (m ? Mode::MEDIUM : Mode::ECO);
+  return h ? Mode::MODE_HIGH : (m ? Mode::MODE_MEDIUM : Mode::MODE_ECO);
 }
 
 const char *stateName(State s) {
