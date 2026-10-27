@@ -1,0 +1,22 @@
+# Compiled files
+*.o
+*.obj
+*.elf
+*.hex
+*.bin
+*.exe
+*.dll
+*.so
+
+# Build folders
+build/
+.pio/
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
