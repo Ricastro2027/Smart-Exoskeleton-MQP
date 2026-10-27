@@ -15,5 +15,5 @@ void loop() {
   Serial.print("raw="); Serial.print(raw);
   Serial.print(", calibration_valid="); Serial.print(calibration.valid());
   Serial.print(", inside_calibrated_range="); Serial.print(calibration.inRange(raw));
-  Serial.print(", example_degrees="); Serial.println(calibration.degrees(raw), 2);
+  Serial.print(", example_degrees="); Serial.println(calibration.angleDegrees(raw), 2);
 }
