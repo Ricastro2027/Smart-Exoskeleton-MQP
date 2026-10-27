@@ -97,7 +97,7 @@ void setup() {
     if (!selectIMU(i) || !imu.begin(0x68, &Wire)) {
       state = FAULT; fault = "IMU initialization failed"; break;
     }
-    imu.setFilterBandwidth(MPU6050_BANDWIDTH_21_HZ);
+    imu.setFilterBandwidth(MPU6050_BAND_21_HZ);
   }
   Serial.println("INTEGRATED DRY RUN ONLY. NO MOTOR OUTPUTS.");
   nextTick = micros() + PERIOD_US;
