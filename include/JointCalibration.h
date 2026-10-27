@@ -8,8 +8,8 @@ struct JointCalibration {
   float degreesAtMax;
   bool valid() const { return rawMax > rawMin && degreesAtMax != degreesAtMin; }
   bool inRange(uint16_t raw) const { return valid() && raw >= rawMin && raw <= rawMax; }
-  float degrees(uint16_t raw) const {
+  float degrees(uint16_t reading) const {
     if (!valid()) return NAN;
-    return degreesAtMin + (float(raw - rawMin) / float(rawMax - rawMin)) * (degreesAtMax - degreesAtMin);
+    return degreesAtMin + (float(reading - rawMin) / float(rawMax - rawMin)) * (degreesAtMax - degreesAtMin);
   }
 };
