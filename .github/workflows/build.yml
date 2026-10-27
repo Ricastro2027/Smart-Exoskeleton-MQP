@@ -14,4 +14,4 @@ jobs:
       - name: Install PlatformIO
         run: python -m pip install platformio
       - name: Compile all firmware environments
-        run: pio run -e teensy41 -e potentiometer -e button -e combined_inputs -e analog_health -e joint_calibration -e system_skeleton
+        run: pio run -e teensy41 -e potentiometer -e button -e combined_inputs -e analog_health -e joint_calibration -e system_skeleton -e sensor_testing -e full_exoskeleton_dry_run -e motor_test_bench
