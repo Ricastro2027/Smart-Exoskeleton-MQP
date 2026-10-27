@@ -29,3 +29,11 @@ Pin assignments in `include/PinConfig.h` are provisional.
 
 ## Next
 Add actual IMU/FSR drivers and motor-driver integration after hardware selection. Validate components separately, then combine them with fault handling and safe startup.
+
+## Additional tests
+- `analog_health`: raw ADC readings, normalized values and rail warnings.
+- `joint_calibration`: demonstration of raw-to-angle conversion. **Replace example endpoints before relying on angles.**
+
+See `docs/HARDWARE_CHECKLIST.md` before connecting hardware, `docs/ARCHITECTURE.md` for planned modules, and `docs/TEST_LOG_TEMPLATE.md` for recording bench results.
+
+A GitHub Actions workflow attempts to compile all firmware environments on pushes and pull requests. Its success must be checked in GitHub Actions; compilation is not proof of hardware safety.
