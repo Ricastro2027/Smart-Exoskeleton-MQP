@@ -1,4 +1,4 @@
-#include <Arduino.h>
+#include "Arduino.h"
 #include "PinConfig.h"
 #include "SystemState.h"
 #include "SafetyManager.h"
@@ -37,4 +37,59 @@ void loop() {
     Serial.print(", start_pressed=");
     Serial.println(digitalRead(Pins::ENABLE_BUTTON) == LOW ? 1 : 0);
   }
+
+
+}
+
+void Motor_Adjust() {
+
+
+    Muscle_Force = FSR_Adjust(); %adjust the sensitivity based on FSR reading range
+
+    Error
+
+    if Muscle_Force > 0.5 {
+        // Increase motor output
+    } else if Muscle_Force < 0.5 {
+        // Decrease motor output
+    } else {
+        // Maintain current motor output
+    }
+
+}
+
+void FSR_Record() {
+    %% bool initialized = false;
+    %% FSR_PIN = A0; %define the FSR pin
+
+    if initialized == false {
+        catalog = []
+        Reading = analogRead(FSR_PIN); %read the FSR sensor value
+        catalog.append(Reading);
+    }
+  }
+void FSR_Store() {
+
+    catalog = FSR_Record(); %call the FSR_Record function to get the readings
+
+    if len(catalog) > 100 {
+        initialized = true;
+        return catalog;
+    } else {
+        initialized = false;
+    }
+}
+void Calculate_Average() {
+    catalog = FSR_Store(); %call the FSR_Store function to get the readings
+
+    if len(catalog) > 0 {
+        min = min(catalog); %find the minimum reading
+        max = max(catalog); %find the maximum reading
+
+        %% TODO: Change percent of range
+        range = (max - min) * 0.5; %calculate the range of the readings
+        
+    } else {
+        return 0; %return 0 if there are no readings
+    }
 }
