@@ -41,12 +41,16 @@ void loop() {
 
 }
 
-void Motor_Adjust() {
+void Motor_Effort_Adjust() {
 
 
-    Muscle_Force = FSR_Adjust(); %adjust the sensitivity based on FSR reading range
+    range = Calculate_Range(); %adjust the sensitivity based on FSR reading range
+    maximum = range * 0.8; % set the target muscle force to 80% of the range
+    %%%% ^ ADJUST IF NECESSARY ^ %%%%
 
-    Error
+    new_reading = analogRead(FSR_PIN); %read the FSR sensor value
+    
+
 
     if Muscle_Force > 0.5 {
         // Increase motor output
@@ -59,37 +63,26 @@ void Motor_Adjust() {
 }
 
 void FSR_Record() {
-    %% bool initialized = false;
     %% FSR_PIN = A0; %define the FSR pin
 
-    if initialized == false {
-        catalog = []
-        Reading = analogRead(FSR_PIN); %read the FSR sensor value
-        catalog.append(Reading);
+    catalog = [];
+    if len(catalog) >= 100 {
+        return catalog; %return the catalog if it has 100 readings
+    } else{
+      Reading = analogRead(FSR_PIN); %read the FSR sensor value
+      catalog.append(Reading);
     }
   }
-void FSR_Store() {
 
+void Calculate_Range() {
     catalog = FSR_Record(); %call the FSR_Record function to get the readings
 
-    if len(catalog) > 100 {
-        initialized = true;
-        return catalog;
+    if len(catalog) <= 0 {
+        return 0; % return 0 if there are no readings
     } else {
-        initialized = false;
-    }
-}
-void Calculate_Average() {
-    catalog = FSR_Store(); %call the FSR_Store function to get the readings
-
-    if len(catalog) > 0 {
         min = min(catalog); %find the minimum reading
         max = max(catalog); %find the maximum reading
-
-        %% TODO: Change percent of range
-        range = (max - min) * 0.5; %calculate the range of the readings
-        
-    } else {
-        return 0; %return 0 if there are no readings
+        range = (max - min); %calculate the range of analog readings
+        return range;
     }
 }
