@@ -1,39 +1,29 @@
-# Smart Exoskeleton MQP
+# Smart Exoskeleton MQP | Software & Sensors
 
-Teensy 4.1 Arduino C++ firmware scaffold for the WPI lower-limb exoskeleton.
+This repository contains the WPI lower-limb exoskeleton's Teensy firmware, sensor development notes, electrical integration information, and test history. The team's overall project files and CAD remain in its shared Outlook folder.
 
-## Getting started
-1. Install VS Code and the PlatformIO IDE extension.
-2. Clone this repository, then open its root folder in VS Code.
-3. Select a PlatformIO environment and build/upload.
-4. Open Serial Monitor at 115200 baud.
+## Start here
 
-## Test environments
-- `teensy41`: default, four potentiometers plus button
-- `potentiometer`: one potentiometer
-- `button`: one momentary button
-- `combined_inputs`: potentiometer plus button
+| Folder | What to find there |
+| --- | --- |
+| [01_Software](01_Software/) | Teensy 4.1 firmware, PlatformIO settings, example programs, architecture, control and integration notes |
+| [02_Sensors](02_Sensors/) | Sensor specifications, selection research, calibration and placement notes |
+| [03_Electrical](03_Electrical/) | Wiring, pin assignments, hardware checklist and electrical safety |
+| [04_Testing](04_Testing/) | Physical test records, results, failed experiments and test-log template |
 
-CLI example: `pio run -e potentiometer -t upload`.
-Monitor: `pio device monitor -b 115200`.
+## Running firmware
 
-## Hardware notes
-Pin assignments in `include/PinConfig.h` are provisional.
-- Teensy 4.1 inputs are 3.3 V only, not 5 V tolerant.
-- Potentiometer: outer terminals to 3.3 V and GND, wiper to analog pin.
-- Two-wire momentary button: pin 2 and GND, using internal pull-up.
-- Values are raw ADC counts, not calibrated joint angles.
-- The button is **not** a safety-rated emergency stop.
+1. Install VS Code with the PlatformIO extension.
+2. Open **[01_Software/Firmware](01_Software/Firmware/)** as the PlatformIO project folder (not the repository root).
+3. Select the environment from [platformio.ini](01_Software/Firmware/platformio.ini) and build.
+4. Serial monitor speed: **115200 baud**.
 
-**Motor output is intentionally not implemented.** Confirm motor driver, supply, independent hardware power cutoff, current limits, watchdog, and mechanical joint limits before developing bench motor tests. Do not test the mechanism on a person.
+The PlatformIO folders are conventional: `src/` is the primary program, `include/` holds reusable C++ headers, and `examples/` contains separately selectable bench programs. Do not move these folders individually without updating the build configuration.
 
-## Next
-Add actual IMU/FSR drivers and motor-driver integration after hardware selection. Validate components separately, then combine them with fault handling and safe startup.
+**Current status:** Firmware is in development. Some code is incomplete and may not compile. Compilation alone is not hardware validation. Motor control and wearable testing require independent safeguards and supervised verification.
 
-## Additional tests
-- `analog_health`: raw ADC readings, normalized values and rail warnings.
-- `joint_calibration`: demonstration of raw-to-angle conversion. **Replace example endpoints before relying on angles.**
+## Keeping a useful engineering history
 
-See `docs/HARDWARE_CHECKLIST.md` before connecting hardware, `docs/ARCHITECTURE.md` for planned modules, and `docs/TEST_LOG_TEMPLATE.md` for recording bench results.
+Record successful **and unsuccessful** tests. Each record should include date, equipment, procedure, measured data, observations, limitations, and next steps. Mark untested ideas as *proposed*, not *verified*. Use [the test-log template](04_Testing/TEST_LOG_TEMPLATE.md).
 
-A GitHub Actions workflow attempts to compile all firmware environments on pushes and pull requests. Its success must be checked in GitHub Actions; compilation is not proof of hardware safety.
+Older design notes and project history are retained in [Software documentation](01_Software/Documentation/), rather than deleted. Some links inside those historical documents may still use their original paths.
